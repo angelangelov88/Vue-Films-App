@@ -49,8 +49,6 @@ export default {
           .then(data => {
              movies.value = data.Search
              search.value = ""
-            // console.log(data.Search)
-            // console.log(data.Search[0].Poster)
 })        
 // I have added the catch clause just in case but this API does not use any errors
           .catch(err => console.log(err.message))

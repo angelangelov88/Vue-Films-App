@@ -13,11 +13,10 @@
     <br>
     <p>Genre: {{ movie.Genre }}</p>
     <br>
-<!-- I have added v-if in order to ensure that the rating is shown only if it exist (or its type is not 'undefined'). I still see an error on some rare ocassions and I am working to sort this out -->
+<!-- I have added v-if in order to ensure that the rating is shown only if it exists.  -->
     <div>
-      {{ typeof(movie.Ratings) }}
-      <p v-if="typeof(movie.Ratings) != 'undefined'">IMDb Review: {{ movie.Ratings[0].Value }}</p>
-      <p v-else>IMDb REVIEW: N/A</p>
+      <p v-if="movie && movie.Ratings && movie.Ratings[0]">IMDb Review: {{ movie.Ratings[0].Value }}</p>
+      <p v-else>IMDb Review: N/A</p>
     </div>
     <br>
     <p>BoxOffice: {{ movie.BoxOffice }}</p>
@@ -48,11 +47,6 @@ export default {
         .then(response => response.json())
         .then(data => {
           movie.value = data
-          console.log(data)
-         
-          // console.log(movie.value)
-          // console.log(data.Actors)
-          // console.log(data.Value)
 })
           .catch(err => console.log(err.message))
 })
