@@ -34,7 +34,7 @@
 
 <script>
 import { ref } from 'vue'
-import env from '@/env.js'
+import env from '@/.env'
 
 export default {
   setup () {
