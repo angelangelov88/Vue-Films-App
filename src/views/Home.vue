@@ -1,16 +1,22 @@
 <template>
   <div class="home">
     <div class="feature-card">
+<!-- I have added a paragraph to inform the user that they have to type a film name -->
       <p id="title" v-if="movies">Please type a film name</p>
+<!-- I have added a v-if clause to show error message if the movies object is empty -->
       <p id="error" v-else>Please make sure you type the film name correctly</p>
     </div>
+<!-- I have created a form for the search and on submit it calls the SearchMovies function -->
     <form @submit.prevent="SearchMovies()" class="search-box">
       <input type="text" placeholder="What are you looking for?" v-model="search" />
       <input type="submit" value="Search" id="submit-btn" />
     </form>
+<!-- This is the movies container with the results from the search -->
    <div class="movies-list">
      <div class="movie" v-for="movie in movies" :key="movie.imdbID">
+<!-- I have added a route to the film details page -->
        <router-link :to="'/movie/' + movie.imdbID" class="movie-link">
+<!-- I have added the movie title, year, poster and type as part of its card -->
           <div class="product-image">
             <img v-if="movie.Poster == 'N/A'" src="https://www.movienewz.com/img/films/poster-holder.jpg" alt="Movie poster" />
             <img v-else :src="movie.Poster" alt="Movie poster" />
@@ -35,6 +41,7 @@ export default {
     const search = ref("")
     const movies = ref([])
 
+// This is the function that fetched the data from the API and returns it
     const SearchMovies = () => {
       if (search.value != "") {
         fetch(`http://www.omdbapi.com/?apikey=${env.apikey}&s=${search.value}`)
@@ -44,8 +51,8 @@ export default {
              search.value = ""
             // console.log(data.Search)
             // console.log(data.Search[0].Poster)
-            
 })        
+// I have added the catch clause just in case but this API does not use any errors
           .catch(err => console.log(err.message))
 }
 }

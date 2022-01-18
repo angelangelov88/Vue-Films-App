@@ -1,7 +1,9 @@
 <template>
   <div class="movie-detail">
+<!-- I have rendered the data from the API to the screen -->
     <h2>{{ movie.Title }}</h2>
     <p>{{ movie.Year }}</p>
+<!-- I decided to add v-if clause here to make sure that either the poster is shown or an image saying that no poster is available is shown -->
     <img v-if="movie.Poster == 'N/A'" src="https://www.movienewz.com/img/films/poster-holder.jpg" alt="Movie poster" class="featured-img" />
     <img v-else :src="movie.Poster" alt="Movie poster" class="featured-img" />
     <p>Staring: {{ movie.Actors }}</p>
@@ -11,6 +13,7 @@
     <br>
     <p>Genre: {{ movie.Genre }}</p>
     <br>
+<!-- I have added v-if in order to ensure that the rating is shown only if it exist (or its type is not 'undefined'). I still see an error on some rare ocassions and I am working to sort this out -->
     <div>
       {{ typeof(movie.Ratings) }}
       <p v-if="typeof(movie.Ratings) != 'undefined'">IMDb Review: {{ movie.Ratings[0].Value }}</p>
@@ -39,6 +42,7 @@ export default {
     const movie = ref({})
     const route = useRoute()
 
+// This is the function that fetches the data from the API. It is to be called before the page is loaded
     onBeforeMount(() => {
       fetch(`http://www.omdbapi.com/?apikey=${env.apikey}&i=${route.params.id}&plot=full`)
         .then(response => response.json())
