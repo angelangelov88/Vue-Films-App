@@ -37,6 +37,34 @@ import { ref } from 'vue'
 import env from '@/env.js'
 
 export default {
+//   beforeRouteEnter(to, from, next) {
+    
+//         fetch(`http://www.omdbapi.com/?apikey=${env.apikey}&s=${search.value}`)
+//           .then(response => response.json())
+//           .then(data => {
+//             //  movies.value = data.Search
+//             //  search.value = ""
+//             next(vm => {
+//                   vm.fetch(response);
+//   })
+// })        
+//   },
+
+//   methods: {
+//     SearchMovies(data) {
+//       let post = response.data
+//       this.posts = post
+//     }
+//   },
+
+//   beforeRouteUpdate(to, from, next) {
+//     this.response = null;
+//     fetch((err, response) => {
+//       this.setResponse(err, response);
+//       next();
+//     });
+//   },
+
   setup () {
     const search = ref("")
     const movies = ref([])
@@ -60,8 +88,9 @@ export default {
       movies,
       SearchMovies, 
     }
-  }
+      }
 }
+
 </script>
 
 <style lang="scss">

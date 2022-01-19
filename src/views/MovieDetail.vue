@@ -1,5 +1,6 @@
 <template>
   <div class="movie-detail">
+    <button @click="goBack()">Back</button>
 <!-- I have rendered the data from the API to the screen -->
     <div>
       <h1>{{ movie.Title }}</h1>
@@ -45,6 +46,15 @@ import { useRoute } from 'vue-router'
 import env from '@/env.js'
 
 export default {
+  methods: {
+    // const router = new VueRouter({
+    //   mode: 'history',
+    //   routes: [...]
+    // }),
+    goBack() {
+      this.$router.go(-1)
+    }
+  },
   setup(){
     const movie = ref({})
     const route = useRoute()
@@ -74,6 +84,27 @@ export default {
   max-width: 1250px;
   margin-left: auto;
   margin-right: auto;
+
+  button {
+    // width: 100%;
+    // max-width: 200px;
+    background-color: #42b883;
+    padding: 13px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 15px;
+    text-transform: uppercase;
+    transition: 0.4s;
+    border: none;
+    float: right;
+    @media only screen and (min-width: 600px) {
+}
+  }
+
+  button:hover {
+    cursor: pointer;
+    background-color: darken($color: #42b883, $amount: 10);
+  }
 
   h2 {
     color: #fff;
