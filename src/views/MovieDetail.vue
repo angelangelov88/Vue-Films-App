@@ -1,6 +1,11 @@
 <template>
   <div class="movie-detail">
-    <button @click="goBack()">Back</button>
+    <!-- <button @click="goBack()">Back</button> -->
+    <!-- <a href="{{ URL::previous(-1) }}" class="prevBtn">Previous</a> -->
+
+    <a href="javascript:history.back()" class="btn btn-default">Back</a>
+
+
 <!-- I have rendered the data from the API to the screen -->
     <div>
       <h1>{{ movie.Title }}</h1>
@@ -85,7 +90,8 @@ export default {
   margin-left: auto;
   margin-right: auto;
 
-  button {
+  button ,
+  .prevBtn {
     // width: 100%;
     // max-width: 200px;
     background-color: #42b883;
@@ -101,7 +107,8 @@ export default {
 }
   }
 
-  button:hover {
+  button:hover,
+  .prevBtn:hover {
     cursor: pointer;
     background-color: darken($color: #42b883, $amount: 10);
   }

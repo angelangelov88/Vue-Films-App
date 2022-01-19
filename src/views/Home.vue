@@ -7,10 +7,23 @@
       <p id="error" v-else>Please make sure you type the film name correctly</p>
     </div>
 <!-- I have created a form for the search and on submit it calls the SearchMovies function -->
-    <form @submit.prevent="SearchMovies()" class="search-box">
-      <input type="text" placeholder="What are you looking for?" v-model="search" />
-      <input type="submit" value="Search" id="submit-btn" />
-    </form>
+
+        <form @submit.prevent="SearchMovies()" class="search-box">
+          <input type="text" placeholder="What are you looking for?" v-model="search" />
+          <input type="submit" value="search" id="submit-btn" />
+
+        </form>
+
+
+     <!-- <form method="GET" action="search" class="search-box" @submit="SearchMovies()">
+      <input type="text" placeholder="What are you looking for?" v-model="search" /> -->
+      <!-- <input type="submit" value="search" id="submit-btn" /> -->
+      <!-- <input type="submit" value="search" id="submit-btn" @click="SearchMovies()"/>
+    </form>  -->
+
+
+
+
 <!-- This is the movies container with the results from the search -->
    <div class="movies-list">
      <div class="movie" v-for="movie in movies" :key="movie.imdbID">
@@ -35,6 +48,7 @@
 <script>
 import { ref } from 'vue'
 import env from '@/env.js'
+import routes from '../router/index'
 
 export default {
 //   beforeRouteEnter(to, from, next) {
@@ -70,13 +84,21 @@ export default {
     const movies = ref([])
 
 // This is the function that fetched the data from the API and returns it
-    const SearchMovies = () => {
+     const SearchMovies = () => {
       if (search.value != "") {
         fetch(`http://www.omdbapi.com/?apikey=${env.apikey}&s=${search.value}`)
           .then(response => response.json())
           .then(data => {
              movies.value = data.Search
-             search.value = ""
+            let query = search.value
+            console.log(search.value)
+
+            search.value = ""
+            console.log(search.value)
+            console.log(query)
+            routes.push({path: '/search-query'})
+
+
 })        
 // I have added the catch clause just in case but this API does not use any errors
           .catch(err => console.log(err.message))
