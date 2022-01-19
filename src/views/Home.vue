@@ -193,12 +193,11 @@ export default {
         padding: 0 50px 0 50px;
 }
     .movie {
-       max-width: 200px;
+       max-width: 214px;
       // flex: 1 1 50%;
       padding: 16px 8px;
       @media only screen and (min-width: 600px) {
         flex:none;
-        max-width: 214px;
         min-width: 214px;
 }
 
