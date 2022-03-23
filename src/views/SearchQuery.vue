@@ -21,6 +21,23 @@
             </router-link>
         </div>
     </div>
+    <div class="pages">
+        <div v-show="totalResults>10">
+            <button @click="pagination(1), pageNumber = 1" :class="pageNumber == 1?'active':''">1</button>
+        </div>
+        <div v-show="totalResults>10">
+            <button @click="pagination(2), pageNumber = 2"  :class="pageNumber == 2?'active':''">2</button>
+        </div>
+        <div v-show="totalResults>20">
+            <button @click="pagination(3), pageNumber = 3" :class="pageNumber == 3?'active':''">3</button>
+        </div>
+        <div v-show="totalResults>30">
+            <button @click="pagination(4), pageNumber = 4" :class="pageNumber == 4?'active':''">4</button>
+        </div>
+        <div v-show="totalResults>40">
+            <button @click="pagination(5), pageNumber = 5" :class="pageNumber == 5?'active':''">5</button>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -39,6 +56,8 @@ export default {
         const movies = ref([])
         const movie = ref({})
         const route = useRoute()
+        let pageNumber = 1
+        let totalResults = ref()
 
 // This is the function that fetches the data from the API and renders it to the screen
         onBeforeMount(() => {
@@ -46,16 +65,34 @@ export default {
                 .then(response => response.json())
                 .then(data => {
                     movies.value = data.Search
+                    // console.log(data.Search)
+                    // console.log(data.totalResults)
+                    // console.log(pageNumber)
+                    totalResults.value = data.totalResults
                 })        
 // I have added the catch clause just in case but this API does not use any errors
                 .catch(err => console.log(err.message))
         })
-    
+//I have added this function to add pagination to the page
+        const pagination = (pageNumber) => {
+            fetch(`http://www.omdbapi.com/?apikey=${env.apikey}&s=${route.params.query}&page=${pageNumber}`)
+                .then(response => response.json())
+                .then(data => {
+                    movies.value = data.Search
+                    // console.log(data.Search)
+                    // console.log(data.totalResults)
+                    // console.log(pageNumber)
+                    // totalResults = data.totalResults
+                })        
+        }
         return {
             search,
             movies,
             movie,
-            route
+            route,
+            pagination,
+            pageNumber,
+            totalResults
         }
     }
 }
@@ -175,4 +212,38 @@ button:hover {
         background-color: darken($color: #496583, $amount: 20) ;
 }
 }
+
+.pages {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    color: white;
+    padding: 8px;
+    margin: 2px;
+    border-radius: 3px;
+    font-size: 1em;
+
+}
+
+.page {
+    margin: 10px;
+}
+
+.pages button {
+    padding: 8px;
+    margin: 2px;
+    border-radius: 3px;
+    font-size: 1em;
+
+}
+
+.active {
+    background-color: #35495E !important;
+}
+
+.active:hover {
+    background-color: #35495E;
+    cursor: context-menu;
+}
+
 </style>
